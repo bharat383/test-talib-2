@@ -1,0 +1,92 @@
+<html>
+   <head>
+      <title>Stock Exchange : Formula Control Page</title>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+   </head>
+   <body>
+      <h3>Select Function Testing</h3>
+      <form name='form' id='form' method = "POST">
+         <select name="function_name" id="function_name"  class="function_name" required>
+            <option value="ADX">ADX</option>
+            <option value="AD">AD</option>
+            <option value="RSI">RSI</option>
+            <option value="SAR">SAR</option>
+            <option value="ATR">ATR</option>
+            <option value="BOP">BOP</option>
+            <option value="ADOSC">ADOSC</option>
+         </select>
+         <input type="text" name="min_amount" value="" class="min_amount" id="min_amount" required>
+         <input type="text" name="max_amount" value="" class="max_amount" id="max_amount" required>
+         <input type = "button" value = "Submit" id="submit_function" class="submit_function btn btn-success">
+         <br/><br/>
+         <div class="function_output"></div>
+      </form>
+      
+      <script type="text/javascript">
+      $(document).ready(function(){
+
+         $url = "http://localhost:8081/getfunction_data";
+         var StockExchage = {
+            GetData : function($function_name){
+               $min_amount = $('.min_amount').val();
+               $max_amount = $('.max_amount').val();
+               $function_name = $('.function_name').val();
+               //console.log($min_amount);
+               //console.log($max_amount);
+               $.ajax({
+                 type: 'POST',
+                 url: $url,
+                 data:$('#form').serializeArray(),
+                 beforeSend:function(){
+                   $('form').after('<div class="temp-loading">Loading Data..... Please Wait...</div>');
+                 },
+                 success:function($response_data){
+                    $('.temp-loading').remove();
+                    $('.function_output').html('');
+                    //$('.function_output').html($response_data);
+                    $response_json = $.parseJSON($response_data);  
+                    //$('.function_output').append($response_json);
+                    //console.log($response_json.marketdata_open);
+                    $table_content = '<table width="100%" border="1" cellpadding="3" cellspacing="0">';
+                    $table_content+='<thead><tr><th>Open</th><th>Close</th><th>Low</th><th>High</th><th>Volume</th><th>'+$function_name+'</th></tr></thead><tbody>';
+                    //$('.function_output').html('<table width="100%" border="1" cellpadding="3" cellspacing="3"><tbody>'); 
+                    //$marketdata = "";
+                    //$('.function_output').append($mareketdata);
+                    
+                    $marketdata = $.parseJSON($response_json.marketdata);
+                    /*$.each($marketdata.volume,function($index,$item_data){
+                        console.log($item_data);
+                    });*/
+
+                    $.each($response_json.functiondata,function($index,$item_data){
+                        //console.log($index);
+                        //console.log($min_amount>$item_data && $max_amount<$item_data);
+
+                        if($min_amount!='' && $max_amount!='' && parseFloat($item_data)>parseFloat($min_amount) && parseFloat($item_data)<parseFloat($max_amount)){
+                            //$('.function_output').append("<tr><td>"+($index+1)+"</td><td> "+parseFloat($item_data)+"</td></tr>");
+                            //$table_content+="<tr><td>"+($index+1)+"</td><td> "+parseFloat($item_data)+"</td></tr>";
+                            $table_content+="<tr><td>"+$marketdata.open[$index]+"</td><td>"+$marketdata.close[$index]+"</td><td>"+$marketdata.low[$index]+"</td><td>"+$marketdata.high[$index]+"</td><td>"+$marketdata.volume[$index]+"</td><td> "+parseFloat($item_data)+"</td></tr>";
+                        } 
+                    });
+                    $table_content+='</tbody></table>';
+                    //$('.function_output').append('</tbody></table>');
+                    $('.function_output').append($table_content);
+                    //$('.function_output').append($response_data);
+                 }
+             });     
+            }
+         };
+
+         //$('form').on('submit',function(e){
+         $('.submit_function').on('click',function(){
+            StockExchage.GetData($('.function_name').val());
+         });
+             
+
+             /*$.get('http://localhost:8080/LEDon', function(html_response) {
+                   $('#response').html(html_response); // show the list
+               });*/
+      });
+    </script>
+   </body>
+</html>

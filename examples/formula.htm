@@ -1,0 +1,71 @@
+<html>
+   <head>
+      <title>Stock Exchange : Formula Control Page</title>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+   </head>
+   <body>
+      <h3>Select Function</h3>
+      <form name='form' id='form' method = "POST">
+         <select name="function_name" id="function_name" required>
+            <option value="ADX">ADX</option>
+            <option value="AD">AD</option>
+            <option value="RSI">RSI</option>
+            <option value="SAR">SAR</option>
+            <option value="ATR">ATR</option>
+            <option value="BOP">BOP</option>
+            <option value="ADOSC">ADOSC</option>
+         </select>
+         <input type="text" name="min_amount" value="" class="min_amount" id="min_amount" required>
+         <input type="text" name="max_amount" value="" class="max_amount" id="max_amount" required>
+         <input type = "button" value = "Submit" id="submit_function" class="submit_function btn btn-success">
+         <div class="function_output"></div>
+      </form>
+      
+      <script type="text/javascript">
+      $(document).ready(function(){
+
+         $url = "http://localhost:8081/getfunction_data";
+         var StockExchage = {
+            GetData : function($function_name){
+
+               $min_amount = $('.min_amount').val();
+               $max_amount = $('.max_amount').val();
+               console.log($min_amount);
+               console.log($max_amount);
+               $.ajax({
+                 type: 'POST',
+                 url: $url,
+                 data:$('#form').serializeArray(),
+                 beforeSend:function(){
+                   $('form').after('<div class="temp-loading">Loading Data..... Please Wait...</div>');
+                 },
+                 success:function($response_data){
+                     $('.temp-loading').remove();
+                     $('.function_output').html('');
+                     //$('.function_output').html($response_data);
+                     $response_json = $.parseJSON($response_data);
+                     $.each($response_json,function($index,$item_data){
+                        //console.log($index);
+                        //console.log($min_amount>$item_data && $max_amount<$item_data);
+                        //if($min_amount>$item_data && $max_amount<$item_data){
+                           $('.function_output').append("<br>"+($index+1)+" : "+$item_data);
+                        //}
+                     });
+                 }
+             });     
+            }
+         };
+
+         //$('form').on('submit',function(e){
+         $('.submit_function').on('click',function(){
+            StockExchage.GetData($('function_name').val());
+         });
+             
+
+             /*$.get('http://localhost:8080/LEDon', function(html_response) {
+                   $('#response').html(html_response); // show the list
+               });*/
+      });
+    </script>
+   </body>
+</html>

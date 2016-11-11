@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<head>
+	<title>Test Node JS Example</title>
+</head>
+
+<body>
+    <button id='ledon-button'>LED on</button>
+    <div id="response"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <!-- <script src='ajax.js'></script> -->
+
+    <script type="text/javascript">
+    	$(document).ready(function(){
+	    	$('#ledon-button').click(function() {
+	    		console.log(1);
+			    $.ajax({
+			        type: 'POST',
+			        url: 'http://localhost:8080/LEDon'
+			    });
+
+			    /*$.get('http://localhost:8080/LEDon', function(html_response) {
+	                $('#response').html(html_response); // show the list
+	            });*/
+			});
+		});
+    </script>
+</body>
+</html>

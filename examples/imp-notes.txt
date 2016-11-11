@@ -1,0 +1,18 @@
+
+
+IMP Notes :
+
+
+Node JS Examples : 
+
+1) http://stackoverflow.com/questions/28516951/calling-method-in-node-js-from-browser-using-express
+
+2) https://www.tutorialspoint.com/nodejs/nodejs_express_framework.htm
+
+
+
+Ta-lib : 
+
+1) Function List : http://ta-lib.org/function.html
+
+2) Function Description : https://cryptotrader.org/talib
