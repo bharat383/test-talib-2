@@ -6,8 +6,6 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 app.use(express.static('public'));
 
-console.log('app started 1');
-
 app.set('port', (process.env.PORT || 5000));
 
 app.get('/', function (req, res) {
@@ -151,12 +149,14 @@ app.post('/getfunction_data', urlencodedParser, function (req, res) {
       //console.log(result);
       response = result;
       response_array = {'marketdata':JSON.stringify(marketData),'functiondata':response.result.outReal};
+      console.log(result);
       res.end(JSON.stringify(response_array));
    });
 });
 
 
 app.listen(app.get('port'), function() {
+   console.log('app launched');
   console.log('Node app is running on port', app.get('port'));
 });
 

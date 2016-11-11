@@ -23,9 +23,7 @@
                 $('.function_name').append('<option value="'+$index_data+'">'+$index_data+'</option>');
             });
 
-         //$url = "http://localhost:8081/getfunction_data";
-         $url = "https://murmuring-anchorage-61727.herokuapp.com/getfunction_data";
-         console.log('url : '+$url);
+         $url = "http://localhost:8081/getfunction_data";
          var StockExchage = {
             GetData : function($function_name){
                $min_amount = $('.min_amount').val();
