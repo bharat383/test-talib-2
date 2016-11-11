@@ -13,7 +13,7 @@
   "scripts": {
     "test": "node examples/adx.j",
     "install": "node-gyp rebuild",
-    "start":"node stock.function.node.js"
+    "start":"node examples/stock.function.node.js"
   },
   "repository": {
     "type": "git",
