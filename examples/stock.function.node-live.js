@@ -146,7 +146,7 @@ app.post('/getfunction_data', urlencodedParser, function (req, res) {
 
    console.log($function_array);
    talib.execute($function_array, function (result) {
-      //console.log(result);
+      console.log(result);
       response = result;
       response_array = {'marketdata':JSON.stringify(marketData),'functiondata':response.result.outReal};
       console.log(result);
