@@ -2,9 +2,6 @@
   "name": "stock-exchange-talib-test-1",
   "version": "1.0.0",
   "description": "stock exchange talib test 1",
-  "engines": {
-    "node": ">=4.1.1"
-  },
   "main": "stock.function.node-live.js",
   "directories": {
     "example": "examples"
