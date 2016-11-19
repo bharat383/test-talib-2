@@ -1,6 +1,6 @@
 {
-  "name": "stock-exchange-talib-test-1",
-  "version": "1.0.0",
+  "name": "stock-exchange-talib-test-2",
+  "version": "2.0.0",
   "description": "stock exchange talib test 1",
   "engines": {
     "node": ">=4.1.1"
@@ -11,14 +11,14 @@
   },
   "dependencies": {
     "nan": "^2.4.0",
-    "express":"^2.0.0",
-    "body-parser":"2.0.0"
+    "express": "^2.0.0",
+    "body-parser": "2.0.0"
   },
   "devDependencies": {},
   "scripts": {
     "test": "node examples/adx.j",
     "install": "node-gyp rebuild",
-    "start":"node examples/stock.function.node-live.js"
+    "start": "node examples/stock.function.node-live.js"
   },
   "repository": {
     "type": "git",
