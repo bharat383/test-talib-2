@@ -6,28 +6,21 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 app.use(express.static('public'));
 
-app.set('port', (process.env.PORT || 5000));
 
 app.get('/', function (req, res) {
    res.sendFile( __dirname + "/" + "stock-function-node.htm" );
 })
 
-console.log('app started 2');
-
 app.post('/getfunction_data', urlencodedParser, function (req, res) {
-
-   console.log('app started 3'); 
    // Prepare output in JSON format
-   console.log(req.body);
-   console.log(req.body.function_name);
+   //console.log(req.body);
+   //console.log(req.body.function_name);
 
    $function_name = req.body.function_name;
    $min_amount = req.body.min_amount;
    $max_amount = req.body.max_amount;
    console.log($function_name);
 
-
-   console.log('app started 4');
 
    var talib = require("../build/Release/talib");
    var fs = require("fs");
@@ -39,8 +32,6 @@ app.post('/getfunction_data', urlencodedParser, function (req, res) {
    var marketContents = fs.readFileSync('examples/marketdata.json','utf8'); 
    var marketData = JSON.parse(marketContents);
    //console.log(marketData);
-
-   console.log('app started 5');
 
    var response = '';
    //response = marketdata;
@@ -144,25 +135,17 @@ app.post('/getfunction_data', urlencodedParser, function (req, res) {
                      };
    }
 
-   console.log($function_array);
+   //console.log($function_array);
    talib.execute($function_array, function (result) {
       //console.log(result);
       response = result;
       response_array = {'marketdata':JSON.stringify(marketData),'functiondata':response.result.outReal};
-      console.log(result);
       res.end(JSON.stringify(response_array));
    });
-});
+})
 
-
-app.listen(app.get('port'), function() {
-   console.log('app launched');
-  console.log('Node app is running on port', app.get('port'));
-});
-
-
-/*var server = app.listen(8081, function () {
+var server = app.listen(8081, function () {
    var host = server.address().address
    var port = server.address().port
    console.log("Example app listening at http://%s:%s", host, port)
-})*/
+})
