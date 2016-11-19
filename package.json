@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "stock exchange talib test 1",
   "engines": {
-    "node": ">=4.1.1"
+    "node": ">=4.5.0"
   },
   "main": "stock.function.node-live.js",
   "directories": {
